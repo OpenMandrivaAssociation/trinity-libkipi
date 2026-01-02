@@ -9,9 +9,11 @@
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
-%define pkg_rel 3
+%define pkg_rel 4
 
 %define tde_pkg libkipi
+
+%define tde_prefix /opt/trinity
 
 %define libkipi %{_lib}kipi
 
@@ -35,10 +37,6 @@ URL:		http://www.trinitydesktop.org/
 
 License:	GPLv2+
 
-#Vendor:		Trinity Desktop
-#Packager:	Francois Andriot <francois.andriot@free.fr>
-
-Prefix:			/opt/trinity
 
 Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
 
@@ -47,13 +45,13 @@ BuildOption:    -DCMAKE_BUILD_TYPE="RelWithDebInfo"
 BuildOption:    -DCMAKE_SKIP_RPATH=OFF
 BuildOption:    -DCMAKE_SKIP_INSTALL_RPATH=OFF
 BuildOption:    -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-BuildOption:    -DCMAKE_INSTALL_PREFIX="%{prefix}"
-BuildOption:    -DINCLUDE_INSTALL_DIR="%{prefix}/include/tde"
-BuildOption:    -DLIB_INSTALL_DIR="%{prefix}/%{_lib}"
-BuildOption:    -DDATA_INSTALL_DIR="%{prefix}/share/apps"
-BuildOption:    -DSHARE_INSTALL_PREFIX="%{prefix}/share"
-BuildOption:    -DSERVICETYPES_INSTALL_DIR="%{prefix}/share/servicetypes"
-BuildOption:    -DICON_INSTALL_DIR="%{prefix}/share/icons"
+BuildOption:    -DCMAKE_INSTALL_PREFIX="%{tde_prefix}"
+BuildOption:    -DINCLUDE_INSTALL_DIR="%{tde_prefix}/include/tde"
+BuildOption:    -DLIB_INSTALL_DIR="%{tde_prefix}/%{_lib}"
+BuildOption:    -DDATA_INSTALL_DIR="%{tde_prefix}/share/apps"
+BuildOption:    -DSHARE_INSTALL_PREFIX="%{tde_prefix}/share"
+BuildOption:    -DSERVICETYPES_INSTALL_DIR="%{tde_prefix}/share/servicetypes"
+BuildOption:    -DICON_INSTALL_DIR="%{tde_prefix}/share/icons"
 BuildOption:    -DWITH_ALL_OPTIONS=ON -DBUILD_ALL=ON -DBUILD_DOC=ON
 BuildOption:    -DBUILD_TRANSLATIONS=ON
 BuildOption:    -DWITH_GCC_VISIBILITY=%{!?with_clang:ON}%{?with_clang:OFF}
@@ -115,11 +113,11 @@ Homepage: http://www.kipi-plugins.org/
 
 %files -n trinity-%{libkipi}0 -f %{tde_pkg}.lang
 %defattr(-,root,root,-)
-%{prefix}/%{_lib}/libkipi.so.0
-%{prefix}/%{_lib}/libkipi.so.0.1.1
-%{prefix}/share/apps/kipi/
-%{prefix}/share/icons/hicolor/*/apps/kipi.png
-%{prefix}/share/servicetypes/kipiplugin.desktop
+%{tde_prefix}/%{_lib}/libkipi.so.0
+%{tde_prefix}/%{_lib}/libkipi.so.0.1.1
+%{tde_prefix}/share/apps/kipi/
+%{tde_prefix}/share/icons/hicolor/*/apps/kipi.png
+%{tde_prefix}/share/servicetypes/kipiplugin.desktop
 
 ##########
 
@@ -142,15 +140,15 @@ Homepage: http://www.kipi-plugins.org/
 
 %files -n trinity-%{libkipi}-devel
 %defattr(-,root,root,-)
-%{prefix}/%{_lib}/libkipi.so
-%{prefix}/%{_lib}/libkipi.la
-%{prefix}/include/tde/libkipi/
-%{prefix}/%{_lib}/pkgconfig/libkipi.pc
+%{tde_prefix}/%{_lib}/libkipi.so
+%{tde_prefix}/%{_lib}/libkipi.la
+%{tde_prefix}/include/tde/libkipi/
+%{tde_prefix}/%{_lib}/pkgconfig/libkipi.pc
 
 
 %conf -p 
 unset QTDIR QTINC QTLIB
-export PATH="%{prefix}/bin:${PATH}"
+export PATH="%{tde_prefix}/bin:${PATH}"
 
 
 %install -a
