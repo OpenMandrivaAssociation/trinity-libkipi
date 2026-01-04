@@ -9,7 +9,7 @@
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
-%define pkg_rel 4
+%define pkg_rel 5
 
 %define tde_pkg libkipi
 
@@ -41,17 +41,13 @@ License:	GPLv2+
 Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
 
 BuildSystem:    cmake
+
 BuildOption:    -DCMAKE_BUILD_TYPE="RelWithDebInfo"
-BuildOption:    -DCMAKE_SKIP_RPATH=OFF
-BuildOption:    -DCMAKE_SKIP_INSTALL_RPATH=OFF
-BuildOption:    -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-BuildOption:    -DCMAKE_INSTALL_PREFIX="%{tde_prefix}"
-BuildOption:    -DINCLUDE_INSTALL_DIR="%{tde_prefix}/include/tde"
-BuildOption:    -DLIB_INSTALL_DIR="%{tde_prefix}/%{_lib}"
-BuildOption:    -DDATA_INSTALL_DIR="%{tde_prefix}/share/apps"
-BuildOption:    -DSHARE_INSTALL_PREFIX="%{tde_prefix}/share"
-BuildOption:    -DSERVICETYPES_INSTALL_DIR="%{tde_prefix}/share/servicetypes"
-BuildOption:    -DICON_INSTALL_DIR="%{tde_prefix}/share/icons"
+BuildOption:    -DCMAKE_INSTALL_PREFIX=%{tde_prefix}
+BuildOption:    -DINCLUDE_INSTALL_DIR=%{tde_prefix}/include/tde
+BuildOption:    -DSHARE_INSTALL_PREFIX=%{tde_prefix}/share
+BuildOption:    -DSERVICETYPES_INSTALL_DIR=%{tde_prefix}/share/servicetypes
+BuildOption:    -DICON_INSTALL_DIR=%{tde_prefix}/share/icons
 BuildOption:    -DWITH_ALL_OPTIONS=ON -DBUILD_ALL=ON -DBUILD_DOC=ON
 BuildOption:    -DBUILD_TRANSLATIONS=ON
 BuildOption:    -DWITH_GCC_VISIBILITY=%{!?with_clang:ON}%{?with_clang:OFF}
