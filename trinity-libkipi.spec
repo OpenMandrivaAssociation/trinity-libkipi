@@ -1,21 +1,17 @@
 %bcond clang 1
 
-# BUILD WARNING:
-#  Remove qt-devel and qt3-devel and any kde*-devel on your system !
-#  Having KDE libraries may cause FTBFS here !
-
 # TDE variables
 %define tde_epoch 2
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
-%define pkg_rel 5
 
 %define tde_pkg libkipi
 
 %define tde_prefix /opt/trinity
 
-%define libkipi %{_lib}kipi
+%define libname %mklibname kipi
+%define devname %mklibname kipi -d
 
 %undefine __brp_remove_la_files
 %define dont_remove_libtool_files 1
@@ -30,7 +26,7 @@
 Name:		trinity-%{tde_pkg}
 Epoch:		%{tde_epoch}
 Version:	0.1.5
-Release:	%{?tde_version}_%{?!preversion:%{pkg_rel}}%{?preversion:0_%{preversion}}%{?dist}
+Release:	%{?tde_version:%{tde_version}_}6
 Summary:	Library for apps that want to use kipi-plugins (runtime version) [Trinity]
 Group:		System/Libraries
 URL:		http://www.trinitydesktop.org/
@@ -38,7 +34,7 @@ URL:		http://www.trinitydesktop.org/
 License:	GPLv2+
 
 
-Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
+Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}.tar.xz
 
 BuildSystem:    cmake
 
@@ -92,14 +88,11 @@ Homepage: http://www.kipi-plugins.org/
 
 ##########
 
-%package -n trinity-%{libkipi}0
+%package -n trinity-%{libname}0
 Summary:	library for apps that want to use kipi-plugins (runtime version) [Trinity]
 Group:		System/Libraries
 
-Obsoletes:	trinity-%{tde_pkg} < %{?epoch:%{epoch}:}%{version}-%{release}
-Provides:	trinity-%{tde_pkg} = %{?epoch:%{epoch}:}%{version}-%{release}
-
-%description -n trinity-%{libkipi}0
+%description -n trinity-%{libname}0
 Libkipi is a library
   o that contains common routines and widget used by kipi-plugins
   o to ease implementation of the kipi-plugins interface in an application
@@ -107,7 +100,7 @@ Libkipi is a library
     
 Homepage: http://www.kipi-plugins.org/
 
-%files -n trinity-%{libkipi}0 -f %{tde_pkg}.lang
+%files -n trinity-%{libname}0 -f %{tde_pkg}.lang
 %defattr(-,root,root,-)
 %{tde_prefix}/%{_lib}/libkipi.so.0
 %{tde_prefix}/%{_lib}/libkipi.so.0.1.1
@@ -117,15 +110,12 @@ Homepage: http://www.kipi-plugins.org/
 
 ##########
 
-%package -n trinity-%{libkipi}-devel
+%package -n trinity-%{devname}
 Group:		Development/Libraries/Other
 Summary:	library for apps that want to use kipi-plugins (development version) [Trinity]
-Requires:	%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:	trinity-%{libname}0 = %{?epoch:%{epoch}:}%{version}-%{release}
 
-Obsoletes:	trinity-%{tde_pkg}-devel < %{?epoch:%{epoch}:}%{version}-%{release}
-Provides:	trinity-%{tde_pkg}-devel = %{?epoch:%{epoch}:}%{version}-%{release}
-
-%description -n trinity-%{libkipi}-devel
+%description -n trinity-%{devname}
 Libkipi is a library
   o that contains common routines and widget used by kipi-plugins
   o to ease implementation of the kipi-plugins interface in an application
@@ -134,7 +124,7 @@ Libkipi is a library
 This package contains development files and documentation for libkipi library.
 Homepage: http://www.kipi-plugins.org/
 
-%files -n trinity-%{libkipi}-devel
+%files -n trinity-%{devname}
 %defattr(-,root,root,-)
 %{tde_prefix}/%{_lib}/libkipi.so
 %{tde_prefix}/%{_lib}/libkipi.la
