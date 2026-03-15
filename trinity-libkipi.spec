@@ -113,7 +113,7 @@ Homepage: http://www.kipi-plugins.org/
 %package -n trinity-%{devname}
 Group:		Development/Libraries/Other
 Summary:	library for apps that want to use kipi-plugins (development version) [Trinity]
-Requires:	trinity-%{libname}0 = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:	trinity-%{libname}0 = %{EVRD}
 
 %description -n trinity-%{devname}
 Libkipi is a library
