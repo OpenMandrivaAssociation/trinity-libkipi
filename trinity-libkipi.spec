@@ -47,6 +47,8 @@ BuildOption:    -DBUILD_TRANSLATIONS=ON
 BuildOption:    -DWITH_GCC_VISIBILITY=%{!?with_clang:ON}%{?with_clang:OFF}
 
 BuildRequires: trinity-tdelibs-devel >= %{tde_version}
+BuildRequires: tqt3-dev-tools
+BuildRequires: pkgconfig(tqt)
 
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig
