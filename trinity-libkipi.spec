@@ -24,7 +24,7 @@
 
 Name:		trinity-%{tde_pkg}
 Version:	0.1.5
-Release:	%{?tde_version:%{tde_version}_}6
+Release:	%{?tde_version:%{tde_version}_}7
 Summary:	Library for apps that want to use kipi-plugins (runtime version) [Trinity]
 Group:		System/Libraries
 URL:		http://www.trinitydesktop.org/
@@ -47,7 +47,6 @@ BuildOption:    -DBUILD_TRANSLATIONS=ON
 BuildOption:    -DWITH_GCC_VISIBILITY=%{!?with_clang:ON}%{?with_clang:OFF}
 
 BuildRequires: trinity-tdelibs-devel >= %{tde_version}
-BuildRequires: tqt3-dev-tools
 BuildRequires: pkgconfig(tqt)
 
 BuildRequires: desktop-file-utils
